@@ -1,6 +1,8 @@
 import React from "react";
-import { DocsThemeConfig, useConfig } from "nextra-theme-docs";
-import Image from "next/image";
+import { DocsThemeConfig } from "nextra-theme-docs";
+import { SessionProvider } from "next-auth/react";
+
+import Login from "./components/Login";
 
 const config: DocsThemeConfig = {
   logo: (
@@ -22,6 +24,13 @@ const config: DocsThemeConfig = {
       <div>
         <span>Copyright © 2024, ITGlobers</span>
       </div>
+    ),
+  },
+  navbar: {
+    extraContent: () => (
+      <SessionProvider>
+        <Login />
+      </SessionProvider>
     ),
   },
   useNextSeoProps() {

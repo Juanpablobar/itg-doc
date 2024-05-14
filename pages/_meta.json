@@ -1,3 +1,12 @@
 {
-  "index": "My Homepage"
+  "index": "Introducción",
+  "como-documentar": "Como Documentar",
+  "publicar-documentacion": "Publicar Documentación",
+  "equipos": "Equipos",
+  "contact": {
+    "title": "Contact ↗",
+    "type": "page",
+    "href": "https://twitter.com/shuding_",
+    "newWindow": true
+  }
 }
