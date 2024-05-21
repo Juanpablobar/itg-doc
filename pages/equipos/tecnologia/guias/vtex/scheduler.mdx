@@ -1,0 +1,196 @@
+# VTEX Scheduler
+
+## Description
+This documentation provides examples of using cURL commands to interact with the VTEX Scheduler API. It covers the PUT, GET, and DELETE HTTP methods to schedule, retrieve, and delete jobs, respectively. The PUT method schedules a job that pings a specified URI at regular intervals defined by a cron expression. The GET method retrieves the details of a scheduled job, while the DELETE method removes a scheduled job. Each example includes the necessary headers for authentication and specifies the required URL structure and data payload.
+
+## PUT
+
+### URL
+`https://{{account}}.myvtex.com/api/scheduler/{{workspace}}/{{appId}}/?version=4`
+
+This is the endpoint for the VTEX scheduler API.
+
+### HTTP Method
+`PUT`
+
+The request method used to update or create a scheduled job.
+
+### Headers
+- `VtexIdclientAutCookie: {{VtexIdclientAutCookie}}` (Authentication cookie for VTEX API, only when don't have AppKey)
+- `X-VTEX-API-AppKey: {{X-VTEX-API-AppKey}}` (Authentication AppKey for VTEX API)
+- `X-VTEX-API-AppToken: {{X-VTEX-API-AppToken}}` (Authentication AppToken for VTEX API)
+- `Content-Type: application/json` (Specifies that the data sent is in JSON format)
+
+### Data Payload
+```json
+{
+    "id": "scheduler-app-name",
+    "scheduler": {
+        "expression": "*/1 * * * *",
+        "endDate": "2100-01-01T23:30:00+00:00"
+    },
+    "request": {
+        "uri": "https://domain.test/_v/api/example/ping",
+        "method": "POST",
+        "headers": {
+            "cache-control": "no-store",
+            "pragma": "no-store"
+        }
+    }
+}
+```
+
+- `id`: Identifier for the scheduled job.
+- `scheduler`: Contains scheduling details.
+  - `expression`: Cron expression indicating the job should run every minute.
+  - `endDate`: Specifies when the scheduling should end.
+- `request`: Details of the request to be made.
+  - `uri`: The endpoint to be pinged.
+  - `method`: HTTP method to be used for the request (POST in this case).
+  - `headers`: Additional headers for the request, including cache control.
+
+### Response Examples
+
+#### HTTP Status 200 - OK
+This indicates that the request was successful and the server returned the requested data.
+
+```json
+{
+    "id": "scheduler-app-name",
+    "scheduler": {
+        "expression": "*/1 * * * *",
+        "endDate": "2100-01-01T23:30:00+00:00"
+    },
+    "request": {
+        "uri": "https://domain.test/_v/api/example/ping",
+        "method": "POST",
+        "headers": {
+            "cache-control": "no-store",
+            "pragma": "no-store"
+        }
+    }
+}
+```
+
+#### HTTP Status 201 - Created
+This indicates that the request was successful and a new resource was created.
+
+```json
+OK
+```
+
+#### HTTP Status 401 - Unauthorized
+This indicates that the request has not been applied because it lacks valid authentication credentials for the target resource.
+
+```json
+{
+    "type": "https://tools.ietf.org/html/rfc9110#section-15.5.2",
+    "title": "Unauthorized",
+    "status": 401,
+    "traceId": "00-615d1fb4fa8e61fc4fa2ed8557ec7368-59dea9f46b196ee8-01"
+}
+```
+
+#### HTTP Status 404 - Not Found
+This indicates that the server can't find the requested resource.
+
+```
+Schedule with workspace = {workspace}, app = {appName} and id = {id} not found
+```
+
+## GET
+This cURL command sends a GET request to retrieve the details of a scheduled job using the VTEX API.
+
+### URL
+`https://{{account}}.myvtex.com/api/scheduler/{{workspace}}/{{appId}}/{{id}}?version=4`
+
+### HTTP Method
+`GET`
+
+### Headers
+- `VtexIdclientAutCookie: {{VtexIdclientAutCookie}}` (Authentication cookie for VTEX API, only when don't have AppKey)
+- `X-VTEX-API-AppKey: {{X-VTEX-API-AppKey}}` (Authentication AppKey for VTEX API)
+- `X-VTEX-API-AppToken: {{X-VTEX-API-AppToken}}` (Authentication AppToken for VTEX API)
+- `Content-Type: application/json` (Specifies that the data sent is in JSON format)
+
+### Response Examples
+
+#### HTTP Status 200 - OK
+This indicates that the request has not been applied because it lacks valid authentication credentials for the target resource.
+
+```json
+{
+    "id": "scheduler-app-name",
+    "scheduler": {
+        "expression": "*/1 * * * *",
+        "endDate": "2100-01-01T23:30:00+00:00"
+    },
+    "request": {
+        "uri": "https://domain.test/_v/api/example/ping",
+        "method": "POST",
+        "headers": {
+            "cache-control": "no-store",
+            "pragma": "no-store"
+        }
+    }
+}
+```
+
+#### HTTP Status 401 - Unauthorized
+This indicates that the request has not been applied because it lacks valid authentication credentials for the target resource.
+
+```json
+{
+    "type": "https://tools.ietf.org/html/rfc9110#section-15.5.2",
+    "title": "Unauthorized",
+    "status": 401,
+    "traceId": "00-615d1fb4fa8e61fc4fa2ed8557ec7368-59dea9f46b196ee8-01"
+}
+```
+
+#### HTTP Status 404 - Not Found
+This indicates that the server can't find the requested resource.
+
+```
+Schedule with workspace = {workspace}, app = {appName} and id = {id} not found
+```
+
+## DELETE
+This cURL command sends a DELETE request to remove a scheduled job using the VTEX API.
+
+### URL
+`https://{{account}}.myvtex.com/api/scheduler/{{workspace}}/{{appId}}/{{id}}?version=4`
+
+### HTTP Method
+`DELETE`
+
+### Headers
+- `VtexIdclientAutCookie: {{VtexIdclientAutCookie}}` (Authentication cookie for VTEX API, only when don't have AppKey)
+- `X-VTEX-API-AppKey: {{X-VTEX-API-AppKey}}` (Authentication AppKey for VTEX API)
+- `X-VTEX-API-AppToken: {{X-VTEX-API-AppToken}}` (Authentication AppToken for VTEX API)
+- `Content-Type: application/json` (Specifies that the data sent is in JSON format)
+
+### Response Examples
+
+
+#### HTTP Status 204 - No Content
+
+
+#### HTTP Status 401 - Unauthorized
+This indicates that the request has not been applied because it lacks valid authentication credentials for the target resource.
+
+```json
+{
+    "type": "https://tools.ietf.org/html/rfc9110#section-15.5.2",
+    "title": "Unauthorized",
+    "status": 401,
+    "traceId": "00-615d1fb4fa8e61fc4fa2ed8557ec7368-59dea9f46b196ee8-01"
+}
+```
+
+#### HTTP Status 404 - Not Found
+This indicates that the server can't find the requested resource.
+
+```
+Schedule with workspace = {workspace}, app = {appName} and id = {id} not found
+```
