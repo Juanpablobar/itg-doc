@@ -1,0 +1,92 @@
+# Metología de Desarrollo
+
+Este documento describe el flujo de desarrollo propuesto dentro de ITGlobers, que se basa en el modelo GitFlow. Este modelo organiza el trabajo en tres fases principales: desarrollo de features, preparación de releases, y corrección de bugs en releases (Si es necesario).
+
+Tener en cuenta que esto es una metolodogía propuesta, y que cada equipo puede adaptarla a sus necesidades específicas, o inclusive proponer una nueva metodología.
+
+## Inicio del proyecto
+
+Al iniciar un proyecto, se crea un repositorio en GitHub, adicionalmente se debe solicitar la creación del equipo en Github para la gestión de los permisos, esta solicitud debe ser realizada en el canal de slack #itg-accesos-github-aws. Por último se establecen las ramas `master` o `main` y `develop`.
+
+## 1. Desarrollo de Features
+
+El desarrollo de nuevas características se gestiona a través de ramas de features creadas a partir de la rama `develop`.
+
+![Desarrollo de Features](/images/equipos/tecnologia/metodologia-desarrollo/Dev_Workflow-Development.png)
+
+### Nomenclatura de rama de feature
+
+La nomenclatura de las ramas de feature debe seguir el siguiente formato: `feature/{HUID}-{nombre_feature}`. Por ejemplo, si el HUID es `HUID-123` que hace referencia al login, la rama se llamaría `feature/HUID-123-login`.
+
+### Creación de Pull Request
+
+Al crear un Pull Request, se deben tener en cuenta que la rama feature no tenga conflictos con la rama `develop`, en caso existan lo recomendado es usar la estrategia de Rebase siempre que sea posible y si no es posible, como ultimo recurso realizar un merge y resolver conflictos. Además, se debe asignar a un revisor para que realice la revisión del código.
+
+Adicionalmente se debe tener en cuenta describir los siguientes puntos en el campo de descripción del Pull Request:
+
+1. **Descripción de la tarea**: Descripción de la tarea que se está realizando.
+2. **Pasos para probar**: Pasos para probar la funcionalidad.
+3. **Capturas de pantalla**: Capturas de pantalla de la funcionalidad implementada.
+4. **Ambiente de pruebas**: URL del ambiente de pruebas para que el revisor pueda probar la funcionalidad.
+
+### Revisión de Pull Request
+
+Para la revisión del Pull Request, se deben tener en cuenta los siguientes puntos:
+
+1. **Revisión de código**: Verificar que el código cumple con los estándares de calidad.
+2. **Pruebas unitarias**: Asegurarse de que se han implementado pruebas unitarias (Obligatorio si es requerido en el proyecto, aun asi como recomendación siempre se deben implementar pruebas unitarias).
+3. **Documentación**: Verificar que la documentación esté actualizada.
+
+*RECUERDA*: Más que probar si la funcionalidad cumple los criterios de aceptación de la tarea (Lo cual es tarea del QA), se debe revisar que el código cumpla con los estándares de calidad y buenas prácticas.
+
+### Aprobación de Pull Request
+
+Una vez aprobado el Pull Request, se debe hacer merge a la rama `develop`. En caso de que se requiera, se puede hacer squash de los commits. En caso de que no cumpla con alguno de los puntos anteriores, se debe solicitar al autor que realice los cambios necesarios y dejar los comentarios en el PR.
+
+## 2. Preparación de Release
+
+Una vez completadas las features, se prepara una rama de release para agruparlas antes de pasar a producción. Esta rama se crea a partir de la rama `develop`.
+
+Adicionalmente una vez creada la rama de release con las features que se van a liberar, esta rama no debe recibir más features, solo correcciones de bugs en caso de ser necesario o añadir información acerca de documentación del release o cambios de versiones. El fin de no agregar mas features es para evitar que se genere un nuevo ciclo de pruebas y se retrase la liberación.
+
+![Preparación de Release](/images/equipos/tecnologia/metodologia-desarrollo/Dev_Workflow-Release.png)
+
+### Nomenclatura de rama de release
+
+La nomenclatura de las ramas de release debe seguir el siguiente formato: `release/{version}`. Por ejemplo, si la versión es `1.0.0`, la rama se llamaría `release/1.0.0`.
+
+### Ciclo de Pruebas
+
+Una vez creada la rama de release, se debe realizar un ciclo de pruebas para asegurar que las features funcionan correctamente y que no se han introducido errores. En caso de encontrar errores, se deben corregir a través de ramas de bugfix.
+
+La rama release se debe liberar en un ambiente lo mas parecido a producción, para asegurar que no existan problemas en la liberación. Realizar pruebas en ambientes de desarrollo no es una opción para asegurar la calidad, y se deberia evitar en la medida de lo posible.
+
+### Liberación de Release
+
+Una vez que la rama de release está lista para ser liberada, se debe hacer merge a la rama `master` o `main` y `develop`. Adicionalmente se debe crear un tag con la versión liberada.
+
+Adicional a esto se debe realizar el respectivo despliegue en producción o preproducción, dependiendo de la política de despliegue de cada proyecto.
+
+## 3. Corrección de Bugs en Release
+
+Si se detectan errores durante la fase de release, se deben corregir a través de ramas de bugfix. Estas ramas se crean a partir de la rama de `release`.
+
+![Corrección de Bugs](/images/equipos/tecnologia/metodologia-desarrollo/Dev_Workflow-Bugfix_Release.png)
+
+### Nomenclatura de rama de bugfix
+
+La nomenclatura de las ramas de bugfix debe seguir el siguiente formato: `bugfix/{HUID}-{nombre_bug}`. Por ejemplo, si el HUID es `HUID-123` que hace referencia a un error en el login, la rama se llamaría `bugfix/HUID-123-login`.
+
+### Creación de Pull Request
+
+Al crear un Pull Request, se deben tener en cuenta que la rama bugfix no tenga conflictos con la rama `release`, en caso existan lo recomendado es usar la estrategia de Rebase siempre que sea posible y si no es posible, como ultimo recurso realizar un merge y resolver conflictos. Además, se debe asignar a un revisor para que realice la revisión del código.
+
+Así mismo se debe incluir en la descripción del Pull Request, los mismos puntos que en la creación de un Pull Request de una feature.
+
+### Aprobación de Pull Request
+
+Una vez aprobado el Pull Request, se debe hacer merge a la rama `release`. En caso de que se requiera, se puede hacer squash de los commits. En caso de que no cumpla con alguno de los puntos anteriores, se debe solicitar al autor que realice los cambios necesarios y dejar los comentarios en el PR.
+
+## Conclusión
+
+El uso de GitFlow nos permite mantener un flujo de trabajo organizado y claro, asegurando que cada etapa del desarrollo esté bien definida y documentada. Esto no es una camisa de fuerza, más bien es una guía de la cual podemos tomar lo que necesitemos y adaptarla a las necesidades del proyecto.
