@@ -1,0 +1,47 @@
+# Proceso de Despliegue en VTEX IO
+
+Este documento detalla el proceso de despliegue de aplicaciones utilizando VTEX IO, enfocándonos en asegurar que el ambiente de QA sea lo más cercano posible al de producción. Seguiremos una metodología clara para desplegar versiones beta y estables.
+
+## Importancia de un Ambiente de QA Similar a Producción
+
+Es crucial que el ambiente de QA refleje de cerca el ambiente de producción para minimizar los problemas al momento de los despliegues finales. Esto asegura que cualquier error sea identificado y corregido antes de afectar a los usuarios finales.
+
+## Comandos de Despliegue
+
+### Despliegue de una Nueva Versión Beta
+
+Para publicar una nueva versión beta, que no se distribuirá automáticamente a producción, utilizamos el siguiente comando:
+
+```bash
+vtex release patch beta
+```
+
+Esto creará una versión como `0.0.1-beta.0`. Esta versión se instalará en un ambiente QA específico. Se recomienda usar un workspace llamado `stage`, aunque no es obligatorio.
+
+### Despliegue de un Bugfix en Versión Beta
+
+Si durante la fase de QA se identifica un bug y se necesita realizar un despliegue de un bugfix en la versión beta, el comando a utilizar es:
+
+```bash
+vtex release pre
+```
+
+Este comando incrementa el consecutivo de la versión beta, por ejemplo, de `0.0.1-beta.0` a `0.0.1-beta.1`.
+
+### Publicación de la Versión Final Estable
+
+Una vez que la versión en QA ha sido aprobada y está lista para ser llevada a producción, se utiliza el comando:
+
+```bash
+vtex release patch stable
+```
+
+Este comando publicará la versión final, por ejemplo `0.0.1`, que será la que se distribuya en el ambiente de producción.
+
+## Recomendaciones Finales
+
+* Documenta todos los cambios: Es vital mantener un registro detallado de todos los cambios incluidos en cada versión.
+* Testea exhaustivamente: Asegúrate de realizar pruebas exhaustivas en el ambiente de QA antes de proceder a la versión estable.
+* Comunica con el equipo: Mantén una comunicación fluida con todos los miembros del equipo durante el proceso de despliegue.
+
+Esperamos que este proceso detallado ayude a todos en el equipo, desde desarrolladores junior hasta seniors, a entender y ejecutar los despliegues de manera efectiva.
