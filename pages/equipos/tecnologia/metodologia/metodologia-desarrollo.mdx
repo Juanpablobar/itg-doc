@@ -1,3 +1,4 @@
+
 # Metología de Desarrollo
 
 Este documento describe el flujo de desarrollo propuesto dentro de ITGlobers, que se basa en el modelo GitFlow. Este modelo organiza el trabajo en tres fases principales: desarrollo de features, preparación de releases, y corrección de bugs en releases (Si es necesario).
@@ -60,6 +61,12 @@ La nomenclatura de las ramas de release debe seguir el siguiente formato: `relea
 Una vez creada la rama de release, se debe realizar un ciclo de pruebas para asegurar que las features funcionan correctamente y que no se han introducido errores. En caso de encontrar errores, se deben corregir a través de ramas de bugfix.
 
 La rama release se debe liberar en un ambiente lo mas parecido a producción, para asegurar que no existan problemas en la liberación. Realizar pruebas en ambientes de desarrollo no es una opción para asegurar la calidad, y se deberia evitar en la medida de lo posible.
+
+### Para esto recomendamos usar un workspace productivo
+Al crear un workspace productivo para las pruebas de QA estamos asegurando que se pruebe en un ambiente lo mas parecido a producción 
+```bash
+vtex use {workspaceName} --production
+```
 
 ### Liberación de Release
 
