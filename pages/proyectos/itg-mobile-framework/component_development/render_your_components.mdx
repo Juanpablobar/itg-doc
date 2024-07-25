@@ -1,0 +1,61 @@
+import RegisterCustomComponentsFileTree from '../../../components/RegisterCustomComponentsFileTree'
+import { Callout } from 'nextra/components'
+
+# Registro de componentes personalizados
+
+Una vez has creado tus componentes, deberás registrarlos para visualizarlos en tu aplicación. Esta sección te enseñará a registrar tus componentes y algunos puntos que deberás tener en cuenta al momento de hacerlo.
+
+## Archivo de registro componentes
+
+Los componentes personalizados que quieras agregar a tu proyecto, se registran de forma sencilla en el archivo **`index.tsx`** en la ruta `/src/components`
+
+<RegisterCustomComponentsFileTree />
+
+Este archivo, exporta un objeto llamado **`customComponents`** que actúa como el registro de componentes. En este objeto, cada llave representa el nombre del componente y su valor será la función que renderiza el componente.
+
+## Ejemplo de registro
+
+Tu plantilla proyecto ya incluye un componente registrado. El componente **`RichText`** es importado desde la ruta `/src/components/RichText` y es añadido al objeto de registro **`customComponents`**.
+
+```tsx
+// Ejemplo de registro del componente "rich-text"
+import RichText from './RichText'
+
+type AllowedComponents = Record<string, any>
+
+export const customComponents: AllowedComponents = {
+  // ...otros componentes registrados
+  'rich-text': RichText,
+  // ...otros componentes registrados
+}
+```
+
+## Consideraciones para el registro de componentes
+
+Como ves, el registrar un componente personalizado es un proceso sencillo. Aún así ten en cuenta las siguientes consideraciones
+
+### Configura tu componente desde tu CMS
+
+Tú componente está listo para usar, pero debes agregarlo a tu CMS para que puedas visualizarlo. Recuerda que tu CMS es quien generá la estructura de tu aplicación, sus rutas y componentes para esas rutas.
+Aunque tu componente esté registrado, si no lo llamas en alguna de tus rutas, no lo visualizarás.
+
+Si ya agregaste tu componente a una ruta y no lo visualizas, revisa alguno de los siguientes puntos:
+
+1. El nombre de tu componente debe ser exactamente igual tanto en el archivo de registro de componentes como en tu CMS. Por ejemplo si en tu CMS quieres llamar al componente **`RichText`** no se renderizará si en tu proyecto lo registraste como **`rich-text`**
+2. Verifica que las propiedades que envias desde tu CMS son las que tu componente necesita. Si tu componente **`Slider`** necesita de un arreglo de urls, y en su lugar tu CMS envía otro tipo de dato tu componente puede no renderizarse o puede causar errores en tu aplicación.
+
+### Nombramiento de tus componentes custom
+
+Al registrar tus componentes, es posible que uses un nombre que ya ha sido usado por algún componente de **`itg-ecommerce-plugin`**. Cuando dos componentes tienen el mismo nombre, **tendrá prioridad tu componente personalizado** sobre los componentes de **`itg-ecommerce-plugin`**.
+
+Por ejemplo, tu proyecto por defecto tiene un componente registrado llamado **`'rich-text'`**, este componente existe en e-commerce y está registrado bajo el mismo nombre. Pero al ser llamados desde el CMS, se el componente de tu proyecto.
+
+<Callout emoji="👩🏽‍💻" type="info">
+  Puedes cambiar estilos de tu componente **`'rich-text'`** y visualizarlos en
+  tu aplicación. Si el componente no está en la estructura de tu aplicación,
+  puedes añadirlo desde tu CMS.
+</Callout>
+
+Algunas consideraciones al momento de nombrar tus componentes:
+
+1. Si usas un nombre ya existente se usará en lugar de los componentes de **`itg-ecommerce-plugin`**. Esto incluye todas las secciones de la app que están usando ese componente. Así que, si quieres cambiar o añadir un componente en solo una sección y mantener en otras secciones el uso del componente de e-commerce, registra tu componente bajo un nombre distinto.
