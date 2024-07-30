@@ -1,0 +1,125 @@
+# BSH Inventory Availability
+
+<!-- DOCS-IGNORE:start -->
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+<!-- DOCS-IGNORE:end -->
+
+This app is designed for B2B websites and collects information from various warehouses based on user roles when they log in to the website. The component is displayed as an accordion with all the relevant data on the Product Detail Page (PDP).
+
+## **Install**:
+
+Install `bshgermanyd2x.inventory-availability` in your account.
+
+```powershell
+vtex install bshgermanyd2x.inventory-availability@0.x
+```
+
+</br>
+
+## Configuration
+
+### Step 1 - Adding the BSH Inventory Availability App to Your Theme's Dependencies
+
+To integrate the BSH Inventory Availability app into your theme, follow these steps:
+
+In your theme's `manifest.json`, add the BSH Inventory Availability app as a dependency:
+
+```json
+    "dependencies": {
+        "storeName.bsh-inventory-availability": "0.x"
+    }
+```
+
+Now you are able to use the blocks exported by the `warehouse-stock` app.
+
+### Step 2 - Adding the Inventory Availability to page templates
+
+Declare your main call as children or as a parent in your page templates:
+
+```json
+{
+  "flex-layout.col#product-details": {
+    "children": ["warehouse-stock"]
+  }
+}
+```
+
+### Step 3 - Important configuration on VTEX Admin
+
+#### Store theme configuration
+
+1. Generate new AppKey and AppToken through `https://{accountName}.{environment}.com/admin/mykeys/new/`
+
+2. Go to App management, select `https://{accountName}.{environment}.com/admin/apps/{accountName}.bsh-inventory-availability@{version}/setup/` and add the AppKey and AppToken that you generated.
+
+#### Sellers configuration
+
+1. Go to `https://{accountName}.{environment}.com/admin/appkeys` and add a 3rd party key using the AppKey you created in the store theme.
+
+2. Add a role that has access to logistics _(For example, Owner)_
+
+> _You need to configure all the sellers separately in order to make the Inventory Availability App work._
+
+## Customization
+
+To apply CSS customizations to this and other blocks, refer to the instructions provided in the recipe on [Using CSS Handles for store customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization).
+
+Afterward, create a single-column table with the available CSS handles for the app, as shown below. Ensure that the handles are ordered alphabetically.
+
+| CSS Handles                |
+| -------------------------- |
+| BSH Inventory Availability |
+| -----------                |
+| `warehouseContainer`       |
+| `warehouseData`            |
+| `warehouseInfo`            |
+| `warehouseParent`          |
+
+
+## Custom Fields Set Up 
+
+To set up the relationship between the cost centers created in an organization and the white labels is necessary to define a global custom field.
+
+1.  Go to `https://{accountName}.{environment}.com/admin/b2b-organizations/organizations/#/custom-fields` and select *cost Centers* on the dropdown menu:
+
+![bsh-custom-add-tp-cart-services](https://bshgermanyd2x.vtexassets.com/assets/vtex.file-manager-graphql/images/cfc4f987-565c-49d7-a580-a200364a1011___1e512150134a7d9dcd82b8926a3e9692.jpg)
+
+2. Add the field and edit it, select on "Use on Registration", on the "Field Type" select "Text" and finally set a name, you can use *whitelabelId*. Update it and save settings.
+
+![bsh-custom-add-tp-cart-services](https://bshgermanyd2x.vtexassets.com/assets/vtex.file-manager-graphql/images/00a4f6bf-f399-49fe-821d-95fa2d90bab2___c4381e6e05f0afb6e435222976f0f170.jpg)
+
+3. When you need to create a new cost center go to `https://{accountName}.{environment}.com/admin/b2b-organizations/organizations/{organizationId}/#/cost-centers` and go to new, on the form you are going to see the field *whitelabelId* that you already created, **Here you MUST use the WL id** in order to be able to map correctly the relationship.
+
+![bsh-custom-add-tp-cart-services](https://bshgermanyd2x.vtexassets.com/assets/vtex.file-manager-graphql/images/5396bdcd-c91b-47ae-95ba-d2702fc61adb___14040daa785ec7faca7e8d0209e66ef5.jpg)
+
+4.  When you need to update a cost center that you already created go to `https://{accountName}.{environment}.com/admin/b2b-organizations/organizations/{organizationId}/#/cost-centers` and select the cost center that you want to update, if you go to the bottom of the form you will see the field *whitelabelId* that you already created, **Here you MUST use the WL id** in order to be able to map correctly the relationship.
+
+![bsh-custom-add-tp-cart-services](https://bshgermanyd2x.vtexassets.com/assets/vtex.file-manager-graphql/images/1035587e-13f4-46dc-8e25-efe69af51874___f049414536d3b577eed05ead526cbf06.jpg)
+
+<!-- DOCS-IGNORE:start -->
+
+## Contributors ✨
+
+Special thanks to these wonderful contributors:
+
+- John Martínez
+- Phoebe Wilckens D.
+- Susana Martínez
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind are welcome!
+
+<!-- DOCS-IGNORE:end -->
+
+---
